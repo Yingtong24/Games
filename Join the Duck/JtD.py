@@ -10,7 +10,7 @@ lines=[]
 st=0
 tt=0
 td=10
-nd=0
+dot=0
 cds=0
 dot=0
 
@@ -34,7 +34,7 @@ def draw():
         count+=1
     for line in lines:
         screen.draw.line(line[0], line[1], (255,207,248))
-    if nd < td:
+    if dot < td:
         tt=time.time()-st
         screen.draw.text("Time Taken: "+ (str(round (tt))), (10,10), fontsize=50)
     else:
@@ -52,7 +52,7 @@ def on_mouse_down(pos):
             dot+=1
         else:
             lines=[]
-            nd=0
+            dot=0
             
 
 
