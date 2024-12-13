@@ -13,7 +13,13 @@ ITEMS=["battery.png", "chemical.png", "fire.png", "plasticbag.png"]
 
 def draw():
     screen.blit("background.jpg", (0,0))
-        
+    if gover:
+        screen.draw.text("GAME OVER", center=(500,425), fontsize=50, color="red")
+    elif gc:
+        screen.draw.text("Well done! You have beat the game", center=(500,425), fontsize=50, color="green")
+    else:
+        for item in items:
+            item.draw()  
 def update():
     pass
     global items, lv1
@@ -22,7 +28,7 @@ def update():
 
 def objects(extra):
     newitems=[]
-    options=["paperbag.png"]+random.choice(ITEMS, k=extra)
+    options=["paperbag.png"]+random.choices(ITEMS, k=extra)
     random.shuffle(options)
     for i in options:
         item=Actor(i)
@@ -48,7 +54,7 @@ def on_mouse_down(pos):
                     gc=True
                 else:
                     lv1+=1
-                    items.clear
+                    items.clear()
             else:
                 gameover()
             
