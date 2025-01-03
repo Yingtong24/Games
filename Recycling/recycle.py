@@ -38,7 +38,7 @@ def objects(extra):
     for index, item in enumerate(newitems):
         item.x = (index + 1)*gap_size
         item.y = 0
-        animate(item, duration = speed - lv1, y = HEIGHT)
+        animate(item, duration = speed - lv1, on_finished=gameover, y = HEIGHT)
     return newitems
 
 def gameover():
@@ -58,13 +58,4 @@ def on_mouse_down(pos):
             else:
                 gameover()
             
-
-
-
-
-
-
-
-
-
 pgzrun.go()
