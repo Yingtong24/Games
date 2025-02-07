@@ -14,7 +14,7 @@ obox4=Rect(450,550,320,220)
 
 #Variables
 score=0
-time=0
+timer=15 
 message=""
 gover=False
 qfile="questions.txt"
@@ -33,14 +33,23 @@ def draw():
     screen.draw.filled_rect(obox2, "yellow")
     screen.draw.filled_rect(obox3, "yellow")
     screen.draw.filled_rect(obox4, "yellow")
+    screen.draw.textbox("Skip", sbox, color="black", angle=-90)
     screen.draw.textbox(question[0].strip(), qbox, color="white")
     ind=1
+    screen.draw.textbox(str(timer), tbox, color="dark red")
     for i in ansbox:
-        screen.draw.textbox(question[ind].strip(), i, color="white")
+        screen.draw.textbox(question[ind].strip(), i, color="black")
         ind+=1
 
 def update():
     pass
+
+def updatetime():
+    global timer
+    if timer>0:
+        timer-=1
+    else:
+        gameo()
 
 def readf():
     global total, questions
@@ -54,7 +63,34 @@ def readq():
     global index
     index+=1
     return questions.pop(0).split(",")
+def gameo():
+    global gover, timer, question
+    message=f"Game over!\nYou got {score} questions correct!"
+    question=[message, "-", "-", "-", "-", 5]
+    timer=0
+    gover=True
+def correct():
+    global timer, question, questions, score
+    score+=1
+    if questions:
+        question=readq()
+        timer=15
+    else:
+        gameo()
+
+def on_mouse_down(pos):
+    index=1
+    for i in ansbox:
+        if i.collidepoint(pos):
+            if index==int(question[5]):
+                correct()
+            else:
+                gameo()
+        index+=1
+
 readf()
 question=readq()
+
+clock.schedule_interval(updatetime,1)
 
 pgzrun.go()
