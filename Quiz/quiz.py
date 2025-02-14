@@ -24,7 +24,10 @@ index=0
 ansbox=[obox1, obox2, obox3, obox4]
 
 def draw():
+    global message
     screen.fill("black")
+    message="Welcome to Quiz Master"
+    message= message + f" Q: {index} of {total}"
     screen.draw.filled_rect(mbox, "black")
     screen.draw.filled_rect(qbox, "dark blue")
     screen.draw.filled_rect(tbox, "dark blue")
@@ -35,14 +38,30 @@ def draw():
     screen.draw.filled_rect(obox4, "yellow")
     screen.draw.textbox("Skip", sbox, color="black", angle=-90)
     screen.draw.textbox(question[0].strip(), qbox, color="white")
+    screen.draw.textbox(message, mbox, color="white")
     ind=1
     screen.draw.textbox(str(timer), tbox, color="dark red")
     for i in ansbox:
         screen.draw.textbox(question[ind].strip(), i, color="black")
         ind+=1
+def move():
+    mbox.x-=2
+    if mbox.right<0:
+        mbox.left=1000
+
+
+def skip():
+    global question, timer
+    if questions and not gover:
+        question=readq()
+        timer=15
+    else:
+        gameo()
+
 
 def update():
     pass
+    move()
 
 def updatetime():
     global timer
@@ -87,6 +106,8 @@ def on_mouse_down(pos):
             else:
                 gameo()
         index+=1
+    if sbox.collidepoint(pos):
+        skip()
 
 readf()
 question=readq()
