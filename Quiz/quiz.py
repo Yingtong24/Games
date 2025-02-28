@@ -21,6 +21,7 @@ qfile="questions.txt"
 questions=[]
 total=0
 index=0
+win=False
 ansbox=[obox1, obox2, obox3, obox4]
 
 def draw():
@@ -56,8 +57,13 @@ def skip():
         question=readq()
         timer=15
     else:
-        gameo()
+        wingame()
 
+def wingame():
+    message=f"Yay!\nCongrats! You have finished the game! You got all the questions correct!"
+    question=[message, "-", "-", "-", "-", 5]
+    timer=0
+    win=True
 
 def update():
     pass
@@ -82,12 +88,14 @@ def readq():
     global index
     index+=1
     return questions.pop(0).split(",")
+
 def gameo():
     global gover, timer, question
     message=f"Game over!\nYou got {score} questions correct!"
     question=[message, "-", "-", "-", "-", 5]
     timer=0
     gover=True
+    
 def correct():
     global timer, question, questions, score
     score+=1
